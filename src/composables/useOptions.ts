@@ -1,7 +1,6 @@
 import type Flight from "@/types/Flight";
 import type Option from "@/types/Option";
 import type Segment from "@/types/Segment";
-import data from "@/data/data.json";
 import { ref, computed } from "vue";
 import type Search from "@/types/Search";
 
@@ -9,7 +8,6 @@ export default function useOptions() {
   const search = ref<Search>({ nonstop: false, budget: null });
   const apiBaseUrl =
     "https://sprout-backend-example.free.beeceptor.com/sprout/example";
-  //const flights: Flight[] = await $fetch("/api/flights");
   const options = ref<Option[] | []>([]);
   const searchOptions = ref<Option[] | []>([]);
   const page = ref(1);
