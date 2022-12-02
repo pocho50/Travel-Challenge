@@ -13,6 +13,10 @@ Minimum Requirements:
 - Stopover Information (number of stops if the flight is not direct)
 - We’d like you to use Vue 3 (specifically the composition API)
 
+## Demo App
+
+[https://effulgent-souffle-48403a.netlify.app/](https://effulgent-souffle-48403a.netlify.app/)
+
 ## Project Setup
 
 ```sh
