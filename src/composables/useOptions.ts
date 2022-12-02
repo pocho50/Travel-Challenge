@@ -9,6 +9,7 @@ export default function useOptions() {
   const apiBaseUrl =
     "https://sprout-backend-example.free.beeceptor.com/sprout/example";
   const options = ref<Option[] | []>([]);
+  const carriers = ref();
   const searchOptions = ref<Option[] | []>([]);
   const page = ref(1);
   const itemsxPage = 10;
@@ -20,6 +21,7 @@ export default function useOptions() {
       throw new Error("error");
     }
     const data = await response.json();
+    carriers.value = data.carriers;
     options.value = data.options.map((option, index): Option => {
       return {
         outwardFlight: buildFlight(option.journeys[0]),
@@ -75,7 +77,7 @@ export default function useOptions() {
   const totalCount = computed(() => options.value.length);
 
   const getCarrier = (sl) => {
-    return data.carriers[sl];
+    return carriers.value[sl];
   };
 
   const hasMoreItems = computed(() => {
