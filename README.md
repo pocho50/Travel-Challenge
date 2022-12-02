@@ -1,7 +1,5 @@
 # Travel Challenge
 
-This template should help get you started developing with Vue 3 in Vite.
-
 In this challenge we’d like you to build a basic flight options UI (example below) using a mock
 server we have deployed to return a sample flight(s) response.
 Minimum Requirements:
