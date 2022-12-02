@@ -25,6 +25,11 @@ const toggleDark = useToggle(isDark)
                 </AppButton>
 
             </div>
+            <select class="select w-20 max-w-xs" v-model="$i18n.locale">
+                <option value="es-AR">ES</option>
+                <option value="en-US">EN</option>
+
+            </select>
 
         </div>
     </div>
