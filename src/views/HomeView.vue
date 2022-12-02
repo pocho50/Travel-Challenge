@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import SearchForm from '@/components/SearchForm.vue'
+
 </script>
 
 <template>
-  <main>
-    <button class="btn btn-primary m-4">Hello world</button>
-  </main>
+  <SearchForm />
 </template>
