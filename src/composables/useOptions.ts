@@ -3,28 +3,33 @@ import type Option from "@/types/Option";
 import type Segment from "@/types/Segment";
 import data from "@/data/data.json";
 import { ref, computed } from "vue";
-// import type Search from "@/types/Search";
+import type Search from "@/types/Search";
 
 export default function useOptions() {
-  // const search = ref<Search>({ passengers: 1, budget: Infinity, origin: "" });
+  const search = ref<Search>({ nonstop: false, budget: null });
+  const apiBaseUrl =
+    "https://sprout-backend-example.free.beeceptor.com/sprout/example";
   //const flights: Flight[] = await $fetch("/api/flights");
   const options = ref<Option[] | []>([]);
+  const searchOptions = ref<Option[] | []>([]);
   const page = ref(1);
   const itemsxPage = 10;
 
-  const fetchOptions = async () => {
-    // search.value = { ...newSearch, budget: newSearch.budget || Infinity };
-    options.value = data.options
-      .map((option, index): Option => {
-        return {
-          outwardFlight: buildFlight(option.journeys[0]),
-          returnFlight: buildFlight(option.journeys[1]),
-          price: option.itineraryPrice,
-          id: index,
-        };
-      })
-      .filter((option) => option.outwardFlight.layovers > 0)
-      .slice(0, 10);
+  const fetchOptions = async (newSearch: Search) => {
+    search.value = { ...newSearch, budget: newSearch.budget || null };
+    const response = await fetch(apiBaseUrl);
+    if (!response.ok) {
+      throw new Error("error");
+    }
+    const data = await response.json();
+    options.value = data.options.map((option, index): Option => {
+      return {
+        outwardFlight: buildFlight(option.journeys[0]),
+        returnFlight: buildFlight(option.journeys[1]),
+        price: option.itineraryPrice,
+        id: index,
+      };
+    });
   };
 
   const buildFlight = (flight): Flight => {
@@ -52,13 +57,22 @@ export default function useOptions() {
     };
   };
 
-  // const getPackages = computed<Package[]>(() => {
-  //   return filterByDestination.value
-  //     .sort((pack1: Package, pack2: Package) => {
-  //       return pack1.totalPrice - pack2.totalPrice;
-  //     })
-  //     .slice(0, itemsxPage * page.value);
-  // });
+  const getSearchOptions = computed<Option[]>(() => {
+    searchOptions.value = options.value;
+    if (search.value.nonstop) {
+      searchOptions.value = searchOptions.value.filter(
+        (option) => option.outwardFlight.layovers === 0
+      );
+    }
+
+    if (search.value.budget) {
+      searchOptions.value = searchOptions.value.filter(
+        (option) => option.price <= search.value.budget
+      );
+    }
+
+    return searchOptions.value.slice(0, itemsxPage * page.value);
+  });
 
   const totalCount = computed(() => options.value.length);
 
@@ -66,10 +80,15 @@ export default function useOptions() {
     return data.carriers[sl];
   };
 
+  const hasMoreItems = computed(() => {
+    return searchOptions.value.length > itemsxPage * page.value;
+  });
+
   return {
-    options,
+    getSearchOptions,
     fetchOptions,
     page,
     totalCount,
+    hasMoreItems,
   };
 }

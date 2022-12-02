@@ -9,5 +9,8 @@
   "Outward flight": "Outward flight",
   "Return flight": "Return flight",
   "Price": "Price",
-  "layovers": "layovers"
+  "layovers": "layovers",
+  "Load more": "Load +",
+  "error": "There was an error, please try again later.",
+  "No flights found": "No flights found"
 }

@@ -9,5 +9,8 @@
   "Outward flight": "Vuelo de ida",
   "Return flight": "Vuelo de vuelta",
   "Price": "Precio",
-  "layovers": "escalas"
+  "layovers": "escalas",
+  "Load more": "Cargar +",
+  "error": "Hubo un error, pruebe mas tarde.",
+  "No flights found": "No se encontraron vuelos"
 }
