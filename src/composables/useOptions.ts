@@ -22,7 +22,7 @@ export default function useOptions() {
     }
     const data = await response.json();
     carriers.value = data.carriers;
-    options.value = data.options.map((option, index): Option => {
+    options.value = data.options.map((option: any, index: number): Option => {
       return {
         outwardFlight: buildFlight(option.journeys[0]),
         returnFlight: buildFlight(option.journeys[1]),
@@ -32,7 +32,7 @@ export default function useOptions() {
     });
   };
 
-  const buildFlight = (flight): Flight => {
+  const buildFlight = (flight: any): Flight => {
     const layovers: [] = flight.layovers.all;
     return {
       departureDateTime: flight.departureDateTime,
@@ -40,13 +40,13 @@ export default function useOptions() {
       layovers: layovers.length,
       origin: flight.originPlace.name,
       destination: flight.destinationPlace.name,
-      segments: flight.segments.map((segment, index) =>
+      segments: flight.segments.map((segment: any, index: number) =>
         buildSegment(segment, index)
       ),
     };
   };
 
-  const buildSegment = (segment, index): Segment => {
+  const buildSegment = (segment: any, index: number): Segment => {
     return {
       departureDateTime: segment.departureDateTime,
       arrivalDateTime: segment.arrivalDateTime,
@@ -61,13 +61,13 @@ export default function useOptions() {
     searchOptions.value = options.value;
     if (search.value.nonstop) {
       searchOptions.value = searchOptions.value.filter(
-        (option) => option.outwardFlight.layovers === 0
+        (option: Option) => option.outwardFlight.layovers === 0
       );
     }
 
     if (search.value.budget) {
       searchOptions.value = searchOptions.value.filter(
-        (option) => option.price <= search.value.budget
+        (option: Option) => option.price <= (search.value.budget || 0)
       );
     }
 
@@ -76,7 +76,7 @@ export default function useOptions() {
 
   const totalCount = computed(() => options.value.length);
 
-  const getCarrier = (sl) => {
+  const getCarrier = (sl: string) => {
     return carriers.value[sl];
   };
 

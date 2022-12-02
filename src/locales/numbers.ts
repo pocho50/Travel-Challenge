@@ -1,4 +1,5 @@
-const numberFormats = {
+import type { I18nOptions } from "vue-i18n";
+const numberFormats: I18nOptions["numberFormats"] = {
   "en-US": {
     currency: {
       style: "currency",

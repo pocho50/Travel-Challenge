@@ -4,5 +4,5 @@ export default interface Segment {
   origin: string;
   destination: string;
   airline: string;
-  id: string;
+  id: number;
 }

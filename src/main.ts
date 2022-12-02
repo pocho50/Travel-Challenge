@@ -9,7 +9,7 @@ import numberFormats from "./locales/numbers";
 
 import "./assets/main.css";
 
-const i18n = createI18n({
+const i18n = createI18n<false>({
   locale: "en-US",
   numberFormats,
   datetimeFormats,
